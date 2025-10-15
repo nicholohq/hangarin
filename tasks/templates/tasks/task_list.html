@@ -6,6 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hangarin - Task Manager</title>
     <link rel="stylesheet" href="{% static 'tasks/css/main.css' %}?v=5">
+
+    <link rel="manifest" href="{% static 'tasks/manifest.json' %}">
+    <meta name="theme-color" content="#2D5A87">
+    <link rel="icon" href="{% static 'tasks/icons/icon-192x192.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'tasks/icons/icon-512x512.png' %}">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register("{% static 'tasks/js/serviceworker.js' %}")
+                .then(reg => console.log("✅ Service Worker registered:", reg.scope))
+                .catch(err => console.log("❌ Service Worker registration failed:", err));
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -70,5 +84,16 @@
 </footer>
 
 <script src="{% static 'tasks/js/main.js' %}?v=5"></script>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register("{% static 'tasks/js/serviceworker.js' %}")
+            .then(reg => console.log("✅ Service Worker registered:", reg.scope))
+            .catch(err => console.log("❌ Service Worker registration failed:", err));
+        });
+    }
+</script>
+
+
 </body>
 </html>

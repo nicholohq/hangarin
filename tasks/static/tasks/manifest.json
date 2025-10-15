@@ -1,0 +1,21 @@
+{
+  "name": "Hangarin - Task Manager",
+  "short_name": "Hangarin",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F7F7",
+  "theme_color": "#2D5A87",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/static/tasks/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/tasks/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

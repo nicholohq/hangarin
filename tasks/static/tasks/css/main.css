@@ -12,7 +12,7 @@
 	--secondary: #4A7C8A;
 	--accent: #6B9B7A;
 	--light: #F7F7F7;
-	--dark: #2A2A3E;
+	--dark: #474758;
 	--gradient-1: linear-gradient(135deg, #2D5A87 0%, #4A7C8A 100%);
 	--gradient-2: linear-gradient(135deg, #F1E5AC 0%, #4a90e2 100%);
 }
@@ -146,12 +146,10 @@ header {
 	font-size: 0.85rem;
 }
 
-/* ====== Status-based accent colors ====== */
 .task-card[data-status="Completed"] { border-left-color: #27ae60; }
 .task-card[data-status="Pending"] { border-left-color: #e67e22; }
 .task-card[data-status="In Progress"] { border-left-color: #3498db; }
 
-/* ====== Buttons ====== */
 .btn-create {
 	display: inline-block;
 	background: var(--primary);
@@ -192,7 +190,6 @@ header {
 	margin-bottom: 1.2rem;
 }
 
-/* ====== Form & Button Styles ====== */
 .form-container {
 	background: white;
 	padding: 2rem;
@@ -265,14 +262,12 @@ form textarea {
 	background: #bbb;
 }
 
-/* For delete confirmation */
 .form-actions {
 	display: flex;
 	gap: 1rem;
 	margin-top: 1rem;
 }
 
-/* ====== Footer ====== */
 footer {
 	background: var(--dark);
 	color: white;
@@ -286,7 +281,6 @@ footer p {
 	color: rgba(255,255,255,0.8);
 }
 
-/* ====== Responsive Design ====== */
 @media (max-width: 768px) {
 	.header-container {
 		flex-direction: column;
@@ -311,7 +305,6 @@ footer p {
 	}
 }
 
-/* ====== Dashboard Summary Cards ====== */
 #dashboard {
 	padding: 3rem 5%;
 	max-width: 1200px;

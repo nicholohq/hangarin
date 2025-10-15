@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Tasks - Task Manager</title>
+    <link rel="stylesheet" href="{% static 'tasks/css/main.css' %}?v=2">
+</head>
+<body>
+
+<header>
+    <h1>Task Manager</h1>
+    <p>Your overview of all tasks</p>
+</header>
+
+<section id="tasks">
+    <h2 class="section-title">All Tasks</h2>
+    <p class="section-subtitle">View all your ongoing and completed work.</p>
+
+    {% if tasks %}
+        <div class="task-grid">
+            {% for task in tasks %}
+            <div class="task-card" data-status="{{ task.status }}">
+                <h3><a href="{% url 'task_detail' task.id %}">{{ task.title }}</a></h3>
+                <p>{{ task.description|truncatewords:20 }}</p>
+                <p><strong>Status:</strong> {{ task.status }}</p>
+                <p><strong>Deadline:</strong> {{ task.deadline|date:"M d, Y H:i" }}</p>
+                <small>Created: {{ task.created_at|date:"M d, Y H:i" }}</small>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No tasks yet. <a href="{% url 'task_create' %}">Create one</a>.</p>
+    {% endif %}
+</section>
+
+<footer>
+    <p>&copy; 2025 Task Manager. All rights reserved.</p>
+</footer>
+
+<script src="{% static 'tasks/js/main.js' %}?v=2"></script>
+</body>
+</html>

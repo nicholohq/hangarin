@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ task.title }} - Task Details</title>
+    <link rel="stylesheet" href="{% static 'tasks/css/main.css' %}?v=2">
+</head>
+<body>
+
+<header>
+    <h1>Task Manager</h1>
+    <p>Task Details</p>
+</header>
+
+<section id="tasks">
+    <div class="task-card" data-status="{{ task.status }}">
+        <h2>{{ task.title }}</h2>
+        <p>{{ task.description }}</p>
+
+        <p><strong>Status:</strong> {{ task.status }}</p>
+        <p><strong>Category:</strong> {{ task.category.name }}</p>
+        <p><strong>Priority:</strong> {{ task.priority.name }}</p>
+        <p><strong>Deadline:</strong> {{ task.deadline|date:"M d, Y H:i" }}</p>
+        <small>Created: {{ task.created_at|date:"M d, Y H:i" }}</small>
+    </div>
+
+    <div class="task-actions">
+        <a href="{% url 'task_update' task.id %}" class="btn-edit">Edit</a>
+        <a href="{% url 'task_delete' task.id %}" class="btn-delete">Delete</a>
+        <a href="{% url 'task_list' %}" class="btn-back">Back to List</a>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2025 Task Manager. All rights reserved.</p>
+</footer>
+
+<script src="{% static 'tasks/js/main.js' %}?v=2"></script>
+</body>
+</html>

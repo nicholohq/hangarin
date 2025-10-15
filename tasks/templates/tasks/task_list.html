@@ -4,19 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Tasks - Task Manager</title>
-    <link rel="stylesheet" href="{% static 'tasks/css/main.css' %}?v=2">
+    <title>Hangarin - Task Manager</title>
+    <link rel="stylesheet" href="{% static 'tasks/css/main.css' %}?v=3">
 </head>
 <body>
 
 <header>
-    <h1>Task Manager</h1>
-    <p>Your overview of all tasks</p>
+    <div class="header-container">
+        <div class="header-text">
+            <h1>Task Manager</h1>
+            <p class="tagline">Your overview of all tasks</p>
+        </div>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="{% url 'task_list' %}">All Tasks</a></li>
+                <li><a href="{% url 'task_create' %}">Create Task</a></li>
+                <li><a href="#">Dashboard</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
 
 <section id="tasks">
     <h2 class="section-title">All Tasks</h2>
     <p class="section-subtitle">View all your ongoing and completed work.</p>
+
+    <div class="create-task">
+        <a href="{% url 'task_create' %}" class="btn-create">+ Add New Task</a>
+    </div>
 
     {% if tasks %}
         <div class="task-grid">
@@ -39,6 +55,6 @@
     <p>&copy; 2025 Task Manager. All rights reserved.</p>
 </footer>
 
-<script src="{% static 'tasks/js/main.js' %}?v=2"></script>
+<script src="{% static 'tasks/js/main.js' %}?v=3"></script>
 </body>
 </html>

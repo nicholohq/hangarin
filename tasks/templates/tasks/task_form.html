@@ -10,9 +10,22 @@
 <body>
 
 <header>
-    <h1>Task Manager</h1>
-    <p>{% if form.instance.pk %}Edit Existing Task{% else %}Add a New Task{% endif %}</p>
+    <div class="header-container">
+        <div class="header-text">
+            <h1>Task Manager</h1>
+            <p class="tagline">{% if form.instance.pk %}Edit Existing Task{% else %}Add a New Task{% endif %}</p>
+        </div>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="{% url 'task_list' %}">All Tasks</a></li>
+                <li><a href="{% url 'task_create' %}">Create Task</a></li>
+                <li><a href="#">Dashboard</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
+
 
 <section id="tasks">
     <div class="form-container">

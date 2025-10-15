@@ -147,14 +147,49 @@ header {
 }
 
 /* ====== Status-based accent colors ====== */
-.task-card[data-status="Completed"] {
-	border-left-color: #27ae60; /* green */
+.task-card[data-status="Completed"] { border-left-color: #27ae60; }
+.task-card[data-status="Pending"] { border-left-color: #e67e22; }
+.task-card[data-status="In Progress"] { border-left-color: #3498db; }
+
+/* ====== Buttons ====== */
+.btn-create {
+	display: inline-block;
+	background: var(--primary);
+	color: white;
+	padding: 0.6rem 1.2rem;
+	border-radius: 6px;
+	text-decoration: none;
+	font-weight: 600;
+	margin-bottom: 1.5rem;
+	transition: background 0.3s ease;
 }
-.task-card[data-status="Pending"] {
-	border-left-color: #e67e22; /* orange */
+
+.btn-create:hover {
+	background: var(--secondary);
 }
-.task-card[data-status="In Progress"] {
-	border-left-color: #3498db; /* blue */
+
+.btn-edit, .btn-delete, .btn-back {
+	display: inline-block;
+	margin: 0.4rem;
+	padding: 0.5rem 1rem;
+	border-radius: 6px;
+	text-decoration: none;
+	font-weight: 600;
+	color: white;
+}
+
+.btn-edit { background: #3498db; }
+.btn-delete { background: #e74c3c; }
+.btn-back { background: #7f8c8d; }
+
+.btn-edit:hover { background: #2c80b4; }
+.btn-delete:hover { background: #c0392b; }
+.btn-back:hover { background: #6c7a7a; }
+
+.create-task {
+	text-align: center;
+	margin-top: -0.5rem; 
+	margin-bottom: 1.2rem;
 }
 
 /* ====== Form & Button Styles ====== */

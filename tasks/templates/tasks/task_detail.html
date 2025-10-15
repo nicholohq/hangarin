@@ -10,9 +10,22 @@
 <body>
 
 <header>
-    <h1>Task Manager</h1>
-    <p>Task Details</p>
+    <div class="header-container">
+        <div class="header-text">
+            <h1>Task Manager</h1>
+            <p class="tagline">Task Details</p>
+        </div>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="{% url 'task_list' %}">All Tasks</a></li>
+                <li><a href="{% url 'task_create' %}">Create Task</a></li>
+                <li><a href="#">Dashboard</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
+
 
 <section id="tasks">
     <div class="task-card" data-status="{{ task.status }}">

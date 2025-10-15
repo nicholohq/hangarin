@@ -4,12 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hangarin - Task Manager</title>
-    <link rel="stylesheet" href="{% static 'tasks/css/main.css' %}">
+    <title>Dashboard - Task Manager</title>
+    <link rel="stylesheet" href="{% static 'tasks/css/main.css' %}?v=4">
 </head>
 <body>
 
-    <!-- Header -->
 <header>
     <div class="header-container">
         <div class="header-text">
@@ -19,44 +18,45 @@
 
         <nav class="main-nav">
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/dashboard/">Dashboard</a></li>
-                <li><a href="/tasks/">Tasks</a></li>
-                <li><a href="/login/">Login</a></li>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'task_list' %}">Tasks</a></li>
+                <li><a href="{% url 'task_create' %}">Create Task</a></li>
+                <li><a href="#">Logout</a></li>
             </ul>
         </nav>
     </div>
 </header>
 
-    <!-- Main Section (Replaces “Practices” or “Resources” section from Inner Peace) -->
-    <section id="tasks" class="content-section">
-        <h2 class="section-title">Your Tasks</h2>
-        <p class="section-subtitle">Stay on top of your priorities</p>
 
-        {% if tasks %}
-            <div class="task-grid">
-                {% for task in tasks %}
-                <div class="task-card" data-status="{{ task.status }}">
-                    <h3>{{ task.title }}</h3>
-                    <p>{{ task.description }}</p>
-                    <p><strong>Status:</strong> {{ task.status }}</p>
-                    <p><strong>Category:</strong> {{ task.category.name }}</p>
-                    <p><strong>Priority:</strong> {{ task.priority.name }}</p>
-                    <p><strong>Deadline:</strong> {{ task.deadline|date:"M d, Y H:i" }}</p>
-                    <small>Created: {{ task.created_at|date:"M d, Y H:i" }}</small>
-                </div>
+<section id="tasks">
+    <h2 class="section-title">Dashboard Overview</h2>
+    <p class="section-subtitle">Track your progress at a glance</p>
+
+    <div class="dashboard-grid">
+        <div class="dash-card total">Total Tasks: <strong>{{ total_tasks }}</strong></div>
+        <div class="dash-card completed">Completed: <strong>{{ completed_tasks }}</strong></div>
+        <div class="dash-card pending">Pending: <strong>{{ pending_tasks }}</strong></div>
+        <div class="dash-card progress">In Progress: <strong>{{ in_progress_tasks }}</strong></div>
+    </div>
+
+    <div class="upcoming-section">
+        <h3>Upcoming Deadlines</h3>
+        {% if upcoming %}
+            <ul>
+                {% for task in upcoming %}
+                    <li>{{ task.title }} — {{ task.deadline|date:"M d, Y H:i" }}</li>
                 {% endfor %}
-            </div>
+            </ul>
         {% else %}
-            <p>No tasks yet. Add one from the <a href="/admin/">Admin Panel</a>.</p>
+            <p>No upcoming deadlines.</p>
         {% endif %}
-    </section>
+    </div>
+</section>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Hangarin. All rights reserved.</p>
-    </footer>
+<footer>
+    <p>&copy; 2025 Task Manager. All rights reserved.</p>
+</footer>
 
-    <script src="{% static 'tasks/js/main.js' %}?v=2"></script>
+<script src="{% static 'tasks/js/main.js' %}?v=4"></script>
 </body>
 </html>

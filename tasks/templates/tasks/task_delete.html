@@ -13,18 +13,20 @@
     <div class="header-container">
         <div class="header-text">
             <h1>Task Manager</h1>
-            <p class="tagline">Delete Confirmation</p>
+            <p class="tagline">Stay organized and productive.</p>
         </div>
 
         <nav class="main-nav">
             <ul>
-                <li><a href="{% url 'task_list' %}">All Tasks</a></li>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'task_list' %}">Tasks</a></li>
                 <li><a href="{% url 'task_create' %}">Create Task</a></li>
-                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Logout</a></li>
             </ul>
         </nav>
     </div>
 </header>
+
 
 
 <section id="tasks">

@@ -1,6 +1,24 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
 from .models import Task
 from .forms import TaskForm
+
+def home(request):
+    total_tasks = Task.objects.count()
+    completed_tasks = Task.objects.filter(status="Completed").count()
+    pending_tasks = Task.objects.filter(status="Pending").count()
+    in_progress_tasks = Task.objects.filter(status="In Progress").count()
+    upcoming = Task.objects.filter(deadline__gte=timezone.now()).order_by('deadline')[:5]
+
+    context = {
+        "total_tasks": total_tasks,
+        "completed_tasks": completed_tasks,
+        "pending_tasks": pending_tasks,
+        "in_progress_tasks": in_progress_tasks,
+        "upcoming": upcoming,
+    }
+    return render(request, "tasks/home.html", context)
+
 
 def task_list(request):
     tasks = Task.objects.all().order_by('-created_at')

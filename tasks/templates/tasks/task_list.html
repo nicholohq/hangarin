@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hangarin - Task Manager</title>
-    <link rel="stylesheet" href="{% static 'tasks/css/main.css' %}?v=3">
+    <link rel="stylesheet" href="{% static 'tasks/css/main.css' %}?v=5">
 </head>
 <body>
 
@@ -27,13 +27,25 @@
     </div>
 </header>
 
-
 <section id="tasks">
     <h2 class="section-title">All Tasks</h2>
     <p class="section-subtitle">View all your ongoing and completed work.</p>
 
-    <div class="create-task">
-        <a href="{% url 'task_create' %}" class="btn-create">+ Add New Task</a>
+    <div class="task-toolbar">
+        <div class="create-task">
+            <a href="{% url 'task_create' %}" class="btn-create">+ Add New Task</a>
+        </div>
+
+        <form method="get" class="sort-form">
+            <label for="sort">Sort by:</label>
+            <select name="sort" id="sort" onchange="this.form.submit()">
+                <option value="created" {% if current_sort == 'created' %}selected{% endif %}>Newest</option>
+                <option value="title" {% if current_sort == 'title' %}selected{% endif %}>Title</option>
+                <option value="deadline" {% if current_sort == 'deadline' %}selected{% endif %}>Deadline</option>
+                <option value="priority" {% if current_sort == 'priority' %}selected{% endif %}>Priority</option>
+                <option value="status" {% if current_sort == 'status' %}selected{% endif %}>Status</option>
+            </select>
+        </form>
     </div>
 
     {% if tasks %}
@@ -57,6 +69,6 @@
     <p>&copy; 2025 Task Manager. All rights reserved.</p>
 </footer>
 
-<script src="{% static 'tasks/js/main.js' %}?v=3"></script>
+<script src="{% static 'tasks/js/main.js' %}?v=5"></script>
 </body>
 </html>

@@ -375,3 +375,40 @@ footer p {
 	min-height: 160px;
 }
 
+/* ====== Task Toolbar (Create + Sort) ====== */
+.task-toolbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-bottom: 1.5rem;
+}
+
+.sort-form {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.sort-form label {
+	font-weight: 600;
+	color: var(--dark);
+}
+
+.sort-form select {
+	padding: 0.4rem 0.8rem;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	font-size: 1rem;
+	background-color: white;
+	cursor: pointer;
+	transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sort-form select:hover,
+.sort-form select:focus {
+	border-color: var(--primary);
+	box-shadow: 0 0 4px rgba(45, 90, 135, 0.3);
+	outline: none;
+}
+

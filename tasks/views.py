@@ -3,6 +3,7 @@ from django.utils import timezone
 from .models import Task, Category, Priority, Note, SubTask
 from .forms import TaskForm, CategoryForm, PriorityForm, NoteForm, SubTaskForm
 
+
 def home(request):
     total_tasks = Task.objects.count()
     completed_tasks = Task.objects.filter(status="Completed").count()
@@ -19,13 +20,31 @@ def home(request):
     }
     return render(request, "tasks/home.html", context)
 
+
 def task_list(request):
-    tasks = Task.objects.all().order_by('-created_at')
-    return render(request, 'tasks/task_list.html', {'tasks': tasks})
+    sort_option = request.GET.get('sort', 'created')
+
+    sort_mapping = {
+        'title': 'title',
+        'deadline': 'deadline',
+        'priority': 'priority__name',
+        'status': 'status',
+        'created': '-created_at',
+    }
+
+    sort_field = sort_mapping.get(sort_option, '-created_at')
+    tasks = Task.objects.all().order_by(sort_field)
+
+    return render(request, 'tasks/task_list.html', {
+        'tasks': tasks,
+        'current_sort': sort_option,
+    })
+
 
 def task_detail(request, pk):
     task = get_object_or_404(Task, pk=pk)
     return render(request, 'tasks/task_detail.html', {'task': task})
+
 
 def task_create(request):
     if request.method == 'POST':
@@ -36,6 +55,7 @@ def task_create(request):
     else:
         form = TaskForm()
     return render(request, 'tasks/task_form.html', {'form': form, 'title': 'Create Task'})
+
 
 def task_update(request, pk):
     task = get_object_or_404(Task, pk=pk)
@@ -48,6 +68,7 @@ def task_update(request, pk):
         form = TaskForm(instance=task)
     return render(request, 'tasks/task_form.html', {'form': form, 'title': 'Edit Task'})
 
+
 def task_delete(request, pk):
     task = get_object_or_404(Task, pk=pk)
     if request.method == 'POST':
@@ -55,9 +76,11 @@ def task_delete(request, pk):
         return redirect('task_list')
     return render(request, 'tasks/task_confirm_delete.html', {'task': task})
 
+
 def category_list(request):
     categories = Category.objects.all().order_by('name')
     return render(request, 'tasks/category_list.html', {'categories': categories})
+
 
 def category_create(request):
     if request.method == 'POST':
@@ -68,6 +91,7 @@ def category_create(request):
     else:
         form = CategoryForm()
     return render(request, 'tasks/category_form.html', {'form': form, 'title': 'Create Category'})
+
 
 def category_update(request, pk):
     category = get_object_or_404(Category, pk=pk)
@@ -80,6 +104,7 @@ def category_update(request, pk):
         form = CategoryForm(instance=category)
     return render(request, 'tasks/category_form.html', {'form': form, 'title': 'Edit Category'})
 
+
 def category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
@@ -87,9 +112,11 @@ def category_delete(request, pk):
         return redirect('category_list')
     return render(request, 'tasks/category_confirm_delete.html', {'category': category})
 
+
 def priority_list(request):
     priorities = Priority.objects.all().order_by('name')
     return render(request, 'tasks/priority_list.html', {'priorities': priorities})
+
 
 def priority_create(request):
     if request.method == 'POST':
@@ -100,6 +127,7 @@ def priority_create(request):
     else:
         form = PriorityForm()
     return render(request, 'tasks/priority_form.html', {'form': form, 'title': 'Create Priority'})
+
 
 def priority_update(request, pk):
     priority = get_object_or_404(Priority, pk=pk)
@@ -112,6 +140,7 @@ def priority_update(request, pk):
         form = PriorityForm(instance=priority)
     return render(request, 'tasks/priority_form.html', {'form': form, 'title': 'Edit Priority'})
 
+
 def priority_delete(request, pk):
     priority = get_object_or_404(Priority, pk=pk)
     if request.method == 'POST':
@@ -119,9 +148,11 @@ def priority_delete(request, pk):
         return redirect('priority_list')
     return render(request, 'tasks/priority_confirm_delete.html', {'priority': priority})
 
+
 def note_list(request):
     notes = Note.objects.all().order_by('-created_at')
     return render(request, 'tasks/note_list.html', {'notes': notes})
+
 
 def note_create(request):
     if request.method == 'POST':
@@ -132,6 +163,7 @@ def note_create(request):
     else:
         form = NoteForm()
     return render(request, 'tasks/note_form.html', {'form': form, 'title': 'Create Note'})
+
 
 def note_update(request, pk):
     note = get_object_or_404(Note, pk=pk)
@@ -144,6 +176,7 @@ def note_update(request, pk):
         form = NoteForm(instance=note)
     return render(request, 'tasks/note_form.html', {'form': form, 'title': 'Edit Note'})
 
+
 def note_delete(request, pk):
     note = get_object_or_404(Note, pk=pk)
     if request.method == 'POST':
@@ -151,9 +184,11 @@ def note_delete(request, pk):
         return redirect('note_list')
     return render(request, 'tasks/note_confirm_delete.html', {'note': note})
 
+
 def subtask_list(request):
     subtasks = SubTask.objects.all().order_by('-created_at')
     return render(request, 'tasks/subtask_list.html', {'subtasks': subtasks})
+
 
 def subtask_create(request):
     if request.method == 'POST':
@@ -165,6 +200,7 @@ def subtask_create(request):
         form = SubTaskForm()
     return render(request, 'tasks/subtask_form.html', {'form': form, 'title': 'Create Subtask'})
 
+
 def subtask_update(request, pk):
     subtask = get_object_or_404(SubTask, pk=pk)
     if request.method == 'POST':
@@ -175,6 +211,7 @@ def subtask_update(request, pk):
     else:
         form = SubTaskForm(instance=subtask)
     return render(request, 'tasks/subtask_form.html', {'form': form, 'title': 'Edit Subtask'})
+
 
 def subtask_delete(request, pk):
     subtask = get_object_or_404(SubTask, pk=pk)

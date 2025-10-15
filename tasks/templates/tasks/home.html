@@ -13,7 +13,7 @@
     <div class="header-container">
         <div class="header-text">
             <h1>Task Manager</h1>
-            <p class="tagline">Stay organized and productive.</p>
+            <p class="tagline">Track progress, plan ahead, and stay organized.</p>
         </div>
 
         <nav class="main-nav">
@@ -27,31 +27,74 @@
     </div>
 </header>
 
-
-<section id="tasks">
+<section id="dashboard">
     <h2 class="section-title">Dashboard Overview</h2>
-    <p class="section-subtitle">Track your progress at a glance</p>
+    <p class="section-subtitle">Quick insights and upcoming deadlines</p>
 
-    <div class="dashboard-grid">
-        <div class="dash-card total">Total Tasks: <strong>{{ total_tasks }}</strong></div>
-        <div class="dash-card completed">Completed: <strong>{{ completed_tasks }}</strong></div>
-        <div class="dash-card pending">Pending: <strong>{{ pending_tasks }}</strong></div>
-        <div class="dash-card progress">In Progress: <strong>{{ in_progress_tasks }}</strong></div>
+    <!-- Dashboard Cards -->
+    <div class="summary-grid">
+        <div class="summary-card total">
+            <h3>Total Tasks</h3>
+            <p>{{ total_tasks }}</p>
+        </div>
+        <div class="summary-card completed">
+            <h3>Completed</h3>
+            <p>{{ completed_tasks }}</p>
+        </div>
+        <div class="summary-card progress">
+            <h3>In Progress</h3>
+            <p>{{ in_progress_tasks }}</p>
+        </div>
+        <div class="summary-card pending">
+            <h3>Pending</h3>
+            <p>{{ pending_tasks }}</p>
+        </div>
     </div>
 
+    <!-- Upcoming Tasks -->
     <div class="upcoming-section">
-        <h3>Upcoming Deadlines</h3>
+        <h2>Upcoming Deadlines</h2>
         {% if upcoming %}
-            <ul>
-                {% for task in upcoming %}
-                    <li>{{ task.title }} — {{ task.deadline|date:"M d, Y H:i" }}</li>
-                {% endfor %}
-            </ul>
+        <div class="task-grid">
+            {% for task in upcoming %}
+            <div class="task-card" data-status="{{ task.status }}">
+                <h3>{{ task.title }}</h3>
+                <p>{{ task.description|truncatewords:15 }}</p>
+                <p><strong>Status:</strong> {{ task.status }}</p>
+                <p><strong>Deadline:</strong> {{ task.deadline|date:"M d, Y H:i" }}</p>
+                <a href="{% url 'task_detail' task.id %}" class="btn-edit">View</a>
+            </div>
+            {% endfor %}
+        </div>
         {% else %}
-            <p>No upcoming deadlines.</p>
+            <p>No upcoming tasks 🎉</p>
         {% endif %}
     </div>
+
+    <!-- Optional Section: Recent Activity -->
+    <div class="upcoming-section">
+        <h2>Recent Activity</h2>
+        <div class="summary-grid">
+            <div class="summary-card">
+                <h3>Last Task Added</h3>
+                <p>{{ upcoming.first.title|default:"No tasks yet" }}</p>
+            </div>
+            <div class="summary-card">
+                <h3>Most Common Status</h3>
+                <p>
+                    {% if completed_tasks >= pending_tasks and completed_tasks >= in_progress_tasks %}
+                        Completed
+                    {% elif pending_tasks >= completed_tasks and pending_tasks >= in_progress_tasks %}
+                        Pending
+                    {% else %}
+                        In Progress
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
 </section>
+
 
 <footer>
     <p>&copy; 2025 Task Manager. All rights reserved.</p>

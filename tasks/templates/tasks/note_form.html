@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if form.instance.pk %}Edit Note{% else %}Create Note{% endif %} - Task Manager</title>
+    <link rel="stylesheet" href="{% static 'tasks/css/main.css' %}?v=5">
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <div class="header-text">
+            <h1>Task Manager</h1>
+            <p class="tagline">Manage your task notes efficiently.</p>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'note_list' %}">Notes</a></li>
+                <li><a href="{% url 'note_create' %}">Create Note</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section id="tasks">
+    <div class="form-container">
+        <h2 class="section-title">{% if form.instance.pk %}Edit Note{% else %}Create New Note{% endif %}</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    {% if form.instance.pk %}Update Note{% else %}Create Note{% endif %}
+                </button>
+                <a href="{% url 'note_list' %}" class="btn-cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2025 Task Manager. All rights reserved.</p>
+</footer>
+
+<script src="{% static 'tasks/js/main.js' %}?v=5"></script>
+</body>
+</html>

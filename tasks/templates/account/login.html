@@ -1,0 +1,91 @@
+{% load static socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - Task Manager</title>
+    <link rel="stylesheet" href="{% static 'tasks/css/main.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #f4f6f8;
+        font-family: 'Poppins', sans-serif;
+      }
+      .auth-card {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+      }
+      .auth-card h2 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+      .google-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 10px;
+        font-size: 15px;
+        cursor: pointer;
+        color: #444;
+        text-decoration: none;
+      }
+      .google-btn:hover { background: #f8f8f8; }
+      .google-btn i { color: #ea4335; margin-right: 8px; }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      input {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+      button {
+        padding: 10px;
+        background: #007bff;
+        border: none;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+      }
+      button:hover { background: #0069d9; }
+      p { text-align: center; margin-top: 1rem; }
+    </style>
+  </head>
+  <body>
+    <div class="auth-card">
+      <h2>Login</h2>
+
+      <div style="text-align:center; margin-bottom:1rem;">
+        <a href="{% provider_login_url 'google' %}" class="google-btn">
+          <i class="fab fa-google"></i> Continue with Google
+        </a>
+      </div>
+
+      <form method="post" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        <input type="text" name="login" placeholder="Username or Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+
+      <p>Don't have an account? <a href="{% url 'account_signup' %}">Sign up</a></p>
+      <p><a href="{% url 'account_reset_password' %}">Forgot password?</a></p>
+    </div>
+  </body>
+</html>

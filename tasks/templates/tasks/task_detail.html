@@ -21,19 +21,20 @@
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'task_list' %}">Tasks</a></li>
                 <li><a href="{% url 'task_create' %}">Create Task</a></li>
-                <li><a href="#">Logout</a></li>
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'account_logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'account_login' %}">Login</a></li>
+                {% endif %}
             </ul>
         </nav>
     </div>
 </header>
 
-
-
 <section id="tasks">
     <div class="task-card" data-status="{{ task.status }}">
         <h2>{{ task.title }}</h2>
         <p>{{ task.description }}</p>
-
         <p><strong>Status:</strong> {{ task.status }}</p>
         <p><strong>Category:</strong> {{ task.category.name }}</p>
         <p><strong>Priority:</strong> {{ task.priority.name }}</p>

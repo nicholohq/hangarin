@@ -5,7 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Task Manager</title>
-    <link rel="stylesheet" href="{% static 'tasks/css/main.css' %}?v=4">
+    <link rel="stylesheet" href="{% static 'tasks/css/main.css' %}?v=5">
+    <link rel="manifest" href="{% static 'tasks/manifest.json' %}">
+    <meta name="theme-color" content="#2D5A87">
+    <link rel="icon" href="{% static 'tasks/icons/icon-192x192.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'tasks/icons/icon-512x512.png' %}">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register("{% static 'tasks/js/serviceworker.js' %}")
+                .then(reg => console.log("✅ Service Worker registered:", reg.scope))
+                .catch(err => console.log("❌ Service Worker registration failed:", err));
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -21,7 +34,13 @@
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'task_list' %}">Tasks</a></li>
                 <li><a href="{% url 'task_create' %}">Create Task</a></li>
-                <li><a href="#">Logout</a></li>
+
+                {% if request.user.is_authenticated %}
+                    <li><a href="#">👋 {{ request.user.username }}</a></li>
+                    <li><a href="{% url 'account_logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'account_login' %}">Login</a></li>
+                {% endif %}
             </ul>
         </nav>
     </div>
@@ -31,7 +50,6 @@
     <h2 class="section-title">Dashboard Overview</h2>
     <p class="section-subtitle">Quick insights and upcoming deadlines</p>
 
-    <!-- Dashboard Cards -->
     <div class="summary-grid">
         <div class="summary-card total">
             <h3>Total Tasks</h3>
@@ -51,7 +69,6 @@
         </div>
     </div>
 
-    <!-- Upcoming Tasks -->
     <div class="upcoming-section">
         <h2>Upcoming Deadlines</h2>
         {% if upcoming %}
@@ -71,7 +88,6 @@
         {% endif %}
     </div>
 
-    <!-- Optional Section: Recent Activity -->
     <div class="upcoming-section">
         <h2>Recent Activity</h2>
         <div class="summary-grid">
@@ -95,11 +111,21 @@
     </div>
 </section>
 
-
 <footer>
     <p>&copy; 2025 Task Manager. All rights reserved.</p>
 </footer>
 
-<script src="{% static 'tasks/js/main.js' %}?v=4"></script>
+<script src="{% static 'tasks/js/main.js' %}?v=5"></script>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register("{% static 'tasks/js/serviceworker.js' %}")
+            .then(reg => console.log("✅ Service Worker active:", reg.scope))
+            .catch(err => console.log("❌ Service Worker failed:", err));
+        });
+    }
+</script>
+
 </body>
 </html>

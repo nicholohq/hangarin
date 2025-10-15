@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 from .models import Task, Category, Priority, Note, SubTask
 from .forms import TaskForm, CategoryForm, PriorityForm, NoteForm, SubTaskForm
 
 
+@login_required(login_url='/accounts/login/')
 def home(request):
     total_tasks = Task.objects.count()
     completed_tasks = Task.objects.filter(status="Completed").count()
@@ -21,6 +23,7 @@ def home(request):
     return render(request, "tasks/home.html", context)
 
 
+@login_required(login_url='/accounts/login/')
 def task_list(request):
     sort_option = request.GET.get('sort', 'created')
 
@@ -41,11 +44,13 @@ def task_list(request):
     })
 
 
+@login_required(login_url='/accounts/login/')
 def task_detail(request, pk):
     task = get_object_or_404(Task, pk=pk)
     return render(request, 'tasks/task_detail.html', {'task': task})
 
 
+@login_required(login_url='/accounts/login/')
 def task_create(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -57,6 +62,7 @@ def task_create(request):
     return render(request, 'tasks/task_form.html', {'form': form, 'title': 'Create Task'})
 
 
+@login_required(login_url='/accounts/login/')
 def task_update(request, pk):
     task = get_object_or_404(Task, pk=pk)
     if request.method == 'POST':
@@ -69,19 +75,22 @@ def task_update(request, pk):
     return render(request, 'tasks/task_form.html', {'form': form, 'title': 'Edit Task'})
 
 
+@login_required(login_url='/accounts/login/')
 def task_delete(request, pk):
     task = get_object_or_404(Task, pk=pk)
     if request.method == 'POST':
         task.delete()
         return redirect('task_list')
-    return render(request, 'tasks/task_confirm_delete.html', {'task': task})
+    return render(request, 'tasks/task_delete.html', {'task': task})
 
 
+@login_required(login_url='/accounts/login/')
 def category_list(request):
     categories = Category.objects.all().order_by('name')
     return render(request, 'tasks/category_list.html', {'categories': categories})
 
 
+@login_required(login_url='/accounts/login/')
 def category_create(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -93,6 +102,7 @@ def category_create(request):
     return render(request, 'tasks/category_form.html', {'form': form, 'title': 'Create Category'})
 
 
+@login_required(login_url='/accounts/login/')
 def category_update(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
@@ -105,6 +115,7 @@ def category_update(request, pk):
     return render(request, 'tasks/category_form.html', {'form': form, 'title': 'Edit Category'})
 
 
+@login_required(login_url='/accounts/login/')
 def category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
@@ -113,11 +124,13 @@ def category_delete(request, pk):
     return render(request, 'tasks/category_confirm_delete.html', {'category': category})
 
 
+@login_required(login_url='/accounts/login/')
 def priority_list(request):
     priorities = Priority.objects.all().order_by('name')
     return render(request, 'tasks/priority_list.html', {'priorities': priorities})
 
 
+@login_required(login_url='/accounts/login/')
 def priority_create(request):
     if request.method == 'POST':
         form = PriorityForm(request.POST)
@@ -129,6 +142,7 @@ def priority_create(request):
     return render(request, 'tasks/priority_form.html', {'form': form, 'title': 'Create Priority'})
 
 
+@login_required(login_url='/accounts/login/')
 def priority_update(request, pk):
     priority = get_object_or_404(Priority, pk=pk)
     if request.method == 'POST':
@@ -141,6 +155,7 @@ def priority_update(request, pk):
     return render(request, 'tasks/priority_form.html', {'form': form, 'title': 'Edit Priority'})
 
 
+@login_required(login_url='/accounts/login/')
 def priority_delete(request, pk):
     priority = get_object_or_404(Priority, pk=pk)
     if request.method == 'POST':
@@ -149,11 +164,13 @@ def priority_delete(request, pk):
     return render(request, 'tasks/priority_confirm_delete.html', {'priority': priority})
 
 
+@login_required(login_url='/accounts/login/')
 def note_list(request):
     notes = Note.objects.all().order_by('-created_at')
     return render(request, 'tasks/note_list.html', {'notes': notes})
 
 
+@login_required(login_url='/accounts/login/')
 def note_create(request):
     if request.method == 'POST':
         form = NoteForm(request.POST)
@@ -165,6 +182,7 @@ def note_create(request):
     return render(request, 'tasks/note_form.html', {'form': form, 'title': 'Create Note'})
 
 
+@login_required(login_url='/accounts/login/')
 def note_update(request, pk):
     note = get_object_or_404(Note, pk=pk)
     if request.method == 'POST':
@@ -177,6 +195,7 @@ def note_update(request, pk):
     return render(request, 'tasks/note_form.html', {'form': form, 'title': 'Edit Note'})
 
 
+@login_required(login_url='/accounts/login/')
 def note_delete(request, pk):
     note = get_object_or_404(Note, pk=pk)
     if request.method == 'POST':
@@ -185,11 +204,13 @@ def note_delete(request, pk):
     return render(request, 'tasks/note_confirm_delete.html', {'note': note})
 
 
+@login_required(login_url='/accounts/login/')
 def subtask_list(request):
     subtasks = SubTask.objects.all().order_by('-created_at')
     return render(request, 'tasks/subtask_list.html', {'subtasks': subtasks})
 
 
+@login_required(login_url='/accounts/login/')
 def subtask_create(request):
     if request.method == 'POST':
         form = SubTaskForm(request.POST)
@@ -201,6 +222,7 @@ def subtask_create(request):
     return render(request, 'tasks/subtask_form.html', {'form': form, 'title': 'Create Subtask'})
 
 
+@login_required(login_url='/accounts/login/')
 def subtask_update(request, pk):
     subtask = get_object_or_404(SubTask, pk=pk)
     if request.method == 'POST':
@@ -213,6 +235,7 @@ def subtask_update(request, pk):
     return render(request, 'tasks/subtask_form.html', {'form': form, 'title': 'Edit Subtask'})
 
 
+@login_required(login_url='/accounts/login/')
 def subtask_delete(request, pk):
     subtask = get_object_or_404(SubTask, pk=pk)
     if request.method == 'POST':

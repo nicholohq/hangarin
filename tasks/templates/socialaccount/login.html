@@ -1,0 +1,37 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Confirm Google Login</title>
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+        display: flex; align-items: center; justify-content: center;
+        height: 100vh; background-color: #f4f6f8;
+      }
+      .auth-card {
+        background: #fff; padding: 2rem; border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        max-width: 400px; width: 100%; text-align: center;
+      }
+      button {
+        padding: 10px 20px; border: none; background: #4285F4;
+        color: white; border-radius: 5px; cursor: pointer;
+      }
+      a { display: inline-block; margin-top: 10px; color: #555; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <div class="auth-card">
+      <h3>Confirm Sign In</h3>
+      <p>You are about to sign in using your <strong>{{ provider.name }}</strong> account.</p>
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit">Continue with {{ provider.name }}</button>
+      </form>
+      <a href="{% url 'account_login' %}">Cancel</a>
+    </div>
+  </body>
+</html>

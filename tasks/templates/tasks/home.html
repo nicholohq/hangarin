@@ -33,7 +33,10 @@
             <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'task_list' %}">Tasks</a></li>
-                <li><a href="{% url 'task_create' %}">Create Task</a></li>
+                <li><a href="{% url 'category_list' %}">Categories</a></li>
+                <li><a href="{% url 'priority_list' %}">Priorities</a></li>
+                <li><a href="{% url 'note_list' %}">Notes</a></li>
+                <li><a href="{% url 'subtask_list' %}">Subtasks</a></li>
 
                 {% if request.user.is_authenticated %}
                     <li><a href="#">👋 {{ request.user.username }}</a></li>
